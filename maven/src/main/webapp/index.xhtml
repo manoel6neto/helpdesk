@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <br class="clear" />
+        </ui:define>
+        <ui:define name="body">
+            <br class="clear"/>
+            <h:form id="form" styleClass="form" acceptcharset="iso-8859-1">
+                <br class="clear" />
+                <p:dataTable id="table" widgetVar="table" value="#{userController.lastUsers()}" var="item" disabledTextSelection="true"
+                             rows="10" paginator="false"
+                             emptyMessage="Nenhum imóvel cadastrado." resizableColumns="false">
+
+                    <f:facet name="header">
+                        <h3>Últimos usuários cadastrados</h3>
+                    </f:facet>
+
+                    <p:column headerText="Nome" style="text-align: center; font-weight: bold;">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Email" width="600" style="text-align: center; font-weight: bold;">
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

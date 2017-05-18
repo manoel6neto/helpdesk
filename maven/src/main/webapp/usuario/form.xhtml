@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <br class="clear"/>
+            <h:outputText value="Cadastro de usuário"/>
+        </ui:define>
+        <ui:define name="body">
+            <p:separator />
+            <h:form id="formUser" styleClass="form" acceptcharset="iso-8859-1">
+                <p:messages id="messageForm" showDetail="true" autoUpdate="true" closable="true"/>
+                <h:panelGrid columns="1">
+                    <div class="grid_3 alpha">
+                        <p:outputLabel for="roleDropDown" value="Nível:"/>
+                        <p:selectOneMenu class="grid_3 alpha" effect="fade" id="roleDropDown" value="#{userController.user.role}" autoWidth="false" converter="roleConverter">
+                            <f:selectItems value="#{userController.roleList}" var="role" itemLabel="#{role.name}" itemValue="#{role}" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="grid_3 alpha">
+                        <p:outputLabel for="nameInput" value="Nome:"/>
+                        <p:inputText class="grid_3_5 alpha" id="nameInput" value="#{userController.user.name}" required="true" autocomplete="false" alt="Nome usuário"/>
+                    </div>
+
+                    <div class="grid_3 alpha">
+                        <p:outputLabel for="emailInput" value="Email:"/>
+                        <p:inputText class="grid_3_5 alpha" id="emailInput" value="#{userController.user.email}" required="true" autocomplete="false" alt="Email usuário"/>
+                    </div>
+                </h:panelGrid>
+                <div class="grid_3 alpha">
+                    <p:commandButton iconPos="left" icon="ui-icon-disk" ajax="false" styleClass="grid_1 alpha ui-priority-primary" action="#{userController.save}" value="Salvar" update="formUser"/>
+                    <p:button style="margin-left: 10px;" styleClass="grid_1 alpha" outcome="/usuario/list" value="Voltar" icon="ui-icon-arrowthick-1-w"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

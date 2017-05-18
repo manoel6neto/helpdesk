@@ -1,0 +1,12 @@
+/* 
+    Document   : chages
+    Created on : 13/09/2013, 12:57:05
+    Author     : Wallace
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ui-datatable tbody td{
+    white-space: normal!important;
+    padding: 2px;
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Configurações do Sistema"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="form" styleClass="form" acceptcharset="iso-8859-1">
+
+                <p:dataTable id="table" widgetVar="table" value="#{configController.configList}" var="item">
+
+                    <p:column headerText="Property" width="180">
+                        <h:inputText value="#{item.propertyName}" style="font-size: 1.2em" readonly="true"/>
+                    </p:column>
+
+                    <p:column headerText="Value" width="400">
+                        <h:inputText label="Valor" id="value" value="#{item.propertyValue}" maxlength="100" 
+                                     required="true" style="width: 100%" 
+                                     rendered="#{item.propertyName ne 'apns.environment'}"/>
+
+                        <p:selectOneMenu rendered="#{item.propertyName eq 'apns.environment'}" id="apnsenvironment" 
+                                         label="APNS" value="#{item.propertyValue}" required="true">
+                            <f:selectItem itemLabel="Selecione o ambiente" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Desenvolvimento" itemValue="development"/>
+                            <f:selectItem itemLabel="Produção" itemValue="production"/>
+                        </p:selectOneMenu>
+
+                        <br/>
+                        <p:message for="value" rendered="#{item.propertyName ne 'apns.environment'}"/>
+                        <p:message for="apnsenvironment" rendered="#{item.propertyName eq 'apns.environment'}"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{item.description}" style="white-space: normal"/>
+                        <p:graphicImage  value="/imageServlet?qrcode=true" rendered="#{item.propertyName eq 'checkin.qrcode'}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+                <br class="clear"/>
+                <br/>
+                <div class="grid_12 alpha" style="line-height: 30px;">
+                    <p:commandButton styleClass="grid_1 alpha" action="#{configController.save}" icon="ui-icon-disk" value="Salvar" title="Salvar" update="form"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

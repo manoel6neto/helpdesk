@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <br class="clear" />
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="form" styleClass="form" acceptcharset="iso-8859-1">
+                <br class="clear" />
+                <p:dataTable id="table" widgetVar="tableUsers" value="#{userController.users}" var="item" disabledTextSelection="true"
+                             rows="10" paginator="true" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+                             emptyMessage="Nenhum usuário cadastrado." resizableColumns="false">
+
+                    <f:facet name="header">
+                        <h3>Usuários cadastrados</h3>
+                    </f:facet>
+
+                    <f:facet name="header">
+                        <p:outputPanel style="position: relative; left: 495px;">
+                            <h:outputText value="Filtro:&nbsp;"/>
+                            <p:inputText id="globalFilter" onkeyup="PF('tableUsers').filter()" style="width:200px;"/>
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column filterStyle="display: none" filterable="true" filterBy="#{item.name}" filterMatchMode="contains" headerText="Nome" style="text-align: center; font-weight: bold; vertical-align: middle">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+
+                    <p:column filterStyle="display: none" filterable="true" filterBy="#{item.email}" filterMatchMode="contains" headerText="Email" width="500" style="text-align: center; font-weight: bold; vertical-align: middle">
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+
+                    <p:column filterable="true" filterBy="#{item.role.name}" filterMatchMode="equals" headerText="Nível" width="100" style="text-align: center; font-weight: bold; vertical-align: middle">
+                        <f:facet name="filter">
+                            <p:selectOneButton onchange="PF('tableUsers').filter()">
+                                <f:selectItem itemLabel="*" itemValue="" />
+                                <f:selectItem itemLabel="A" itemValue="ADMIN" />
+                                <f:selectItem itemLabel="U" itemValue="USER" />
+                            </p:selectOneButton>
+                        </f:facet>
+                        <h:outputText value="#{item.role.name}"/>
+                    </p:column>
+
+                    <p:column headerText=" - " width="70" style="text-align: center; font-weight: bold; vertical-align: middle">
+                        <p:commandButton ajax="false" action="#{userController.form(item)}" icon="ui-icon-pencil" title="Editar"/>
+                        <p:commandButton style="margin-left: 5px;" icon="ui-icon-trash" title="Remover" actionListener="#{userController.remove(item)}">
+                            <p:confirm header="Confirmação" message="Deseja continuar com a exclusão?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <br class="clear" />
+                <p:button style="float: left; margin-top: 10px;" styleClass="grid_1 alpha" outcome="/usuario/form" value="Adicionar" icon="ui-icon-plus" iconPos="left"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <!--<ui:define name="title">CAMPO MAGRO</ui:define>-->
+        <!--<ui:define name="title2">CADASTRO IMOBILIÁRIO</ui:define>-->
+
+        <ui:define name="body">
+
+            <h:form styleClass="form loginForm" style="padding-left: 40px;">
+                <div class="grid_3">
+                    <p:outputLabel for="email" value="Email:" style="padding-bottom: 2px;"/>
+                    <p:inputText id="email" value="#{loginController.email}" autocomplete="on"/>
+                </div>
+                <br class="clear"/>
+                <div class="grid_3" style="padding-top: 5px; padding-bottom: 5px;">
+                    <p:outputLabel for="senha" value="Senha:" style="padding-bottom: 2px;"/>
+                    <p:password id="senha" value="#{loginController.password}"/>
+                </div>
+                <br class="clear"/>
+                <br/>
+                <div class="grid_3">
+                    <p:commandButton iconPos="left" icon="ui-icon-newwin" ajax="false" styleClass="grid_1 alpha ui-priority-primary" action="#{loginController.login}" value="Login"/>
+                    <p:commandLink onclick="PF('dlg').show();" style="margin-left: 10px; padding: 20px;" value="Esqueci minha senha"/>
+                </div>
+            </h:form>
+
+            <p:dialog header="Esqueci minha senha" widgetVar="dlg" closeOnEscape="true"
+                      draggable="false" resizable="false" hideEffect="drop" closable="false" footer="* Em nenhum momento temos conhecimento da sua senha!"
+                      modal="true" showEffect="slide">
+                <h:form styleClass="form forgetPassForm" style="margin-bottom: 5px;">
+                    Insira seu e-mail abaixo e lhe enviaremos uma nova senha:
+                    <br class="clear"/>
+                    <br/>
+                    <div class="grid_4 alpha" style="padding-top: 2px;">
+                        <p:inputText id="email" value="#{userController.email}" autocomplete="on"/>
+                    </div>
+                    <br class="clear"/>
+                    <br/>
+                    <p:commandButton ajax="false" styleClass="grid_1 alpha" action="#{userController.resetPassword}" value="Enviar"/>
+                    <br class="clear"/>
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
+

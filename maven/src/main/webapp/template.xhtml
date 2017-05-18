@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title><ui:insert name="browserTitle">:: CAMPO MAGRO ::</ui:insert></title>
+        <h:outputStylesheet name="css/layout.css"/>
+        <h:outputStylesheet name="css/960.css"/>
+        <h:outputStylesheet name="css/estilos.css"/>
+        <h:outputStylesheet name="css/changes.csss"/>
+        <h:outputScript name="js/jquery.maskMoney.js"/>
+        <script type="text/javascript" language="javascript">
+            jQuery(document).ready(function () {
+                updateMasks();
+            });
+            function updateMasks() {
+                jQuery('.maskMoney').each(function () {
+                    jQuery(this).maskMoney({thousands: '.', decimal: ','});
+                });
+                jQuery('.maskGPS').each(function () {
+                    jQuery(this).maskMoney({thousands: '', decimal: ',', precision: 6, allowNegative: true, allowZero: true});
+                });
+                jQuery('.maskInt').each(function () {
+                    jQuery(this).maskMoney({thousands: '', decimal: '', precision: 0, allowZero: true});
+                });
+            }
+        </script>
+    </h:head>
+
+    <h:body>
+        <div id="geral" class="container_12">
+            <div id="header" class="grid_12">
+                <div class="container_12">
+                    <p:link href="http://www.campomagro.pr.gov.br/" target="_blank">
+                        <h:graphicImage alt="brasao campo magro" id="brasao" name="img/brasao_campo_magro.jpg" url="img/brasao_campo_magro.jpg" height="3%" width="3%" style="padding-top: 3px; float: left; padding-right: 1px;" onclick=""/>
+                    </p:link>
+                    <h:form class="form">
+                        <div class="grid_6 alpha" align="left" style="margin-top: 5px; float: left;">
+                            <span class="title1" style="font-size: 16px; padding: 5px; margin-top: 2px; font-style: oblique; font-stretch: expanded; font-weight: bolder;">CAMPO MAGRO</span><br /><span class="title2" style="font-size: 18px; padding: 5px; font-style: oblique; font-stretch: expanded; font-weight: bolder;">CADASTRO IMOBILIÁRIO</span>
+                        </div>
+                        <div class="grid_4 alpha" align="right" style="margin-top: 25px; margin-left: 150px;">
+                            <h:panelGroup rendered="#{loginController.sessionUser != null}">
+                                <span class="accountInfo" style="font-weight: bolder;">
+                                    Bem vindo,&nbsp; 
+                                    <span class="user">
+                                        <h:link style="font-size: 1.0em; color: #508CAA; font-weight: bolder; font-stretch: ultra-expanded;"
+                                                outcome="/user/password"
+                                                value="#{loginController.sessionUser.name.toUpperCase()}&nbsp;&nbsp;"/>
+                                    </span>
+                                    <h:commandLink action="#{loginController.logout}" value="Sair"/>
+                                </span>
+                            </h:panelGroup>
+                        </div>
+                        <h:panelGroup rendered="#{loginController.sessionUser != null}">
+                            <div class="grid_6" style="margin-top: -40px; margin-left: 400px; width: 324px;">
+                                <p:menubar>
+                                    <p:menuitem outcome="/index" value="&nbsp;Inicio" icon="ui-icon-home" iconPos="left" style="padding-left: 10px; padding-right: 10px;"></p:menuitem>
+                                    <p:submenu label="&nbsp;Cadastros" icon="ui-icon-note" style="padding-left: 10px; padding-right: 10px;">
+                                        <p:menuitem value="&nbsp;Proprietários" outcome="/cadastros/proprietarios/form" icon="ui-icon-person" iconPos="left" style="padding-bottom: 5px;"/>
+                                        <p:menuitem value="&nbsp;Imóveis" outcome="/cadastros/imoveis/form" icon="ui-icon-home" iconPos="left" style="padding-bottom: 5px;"/>
+                                    </p:submenu>
+                                    <p:submenu label="&nbsp;Configurações" icon="ui-icon-gear" style="padding-left: 10px; padding-right: 10px;">
+                                        <p:menuitem value="&nbsp;Alterar senha" outcome="/usuario/password" icon="ui-icon-person" iconPos="left" style="padding-bottom: 5px;"></p:menuitem>
+                                        <p:menuitem rendered="#{loginController.isUserInRole('ADMIN')}" value="&nbsp;Usuários" outcome="/usuario/list" icon="ui-icon-bookmark" iconPos="left" style="padding-bottom: 5px;"></p:menuitem>
+                                    </p:submenu>
+                                </p:menubar>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+
+            <div class="grid_12 content">
+                <h1 style="text-align: left;" class="grid_12 alpha">
+                    <ui:insert name="title"></ui:insert>
+                </h1>
+
+                <br class="clear"/>
+                <div id="DIV_MESSAGES" class="grid_12 alpha">
+                    <p:messages id="globalMessages" closable="true" globalOnly="true" autoUpdate="true"/>
+                </div>
+
+                <p:ajaxStatus style="width:220px; position: absolute; top: -20px" id="ajaxStatusPanel">
+                    <f:facet name="start">
+                        <h:graphicImage name="img/ajaxloadingbar.gif"/>
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value=""/>
+                    </f:facet>
+                </p:ajaxStatus>
+
+                <div class="grid_12 alpha">
+                    <ui:insert name="body">
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
+
+        <div id="rodape_ext">
+            <div id="rodape_geral" class="container_12">
+                <div id="rodape" class="grid_12">
+                    <p>© 2017 BY MANOEL CARVALHO NETO | Conheça nossos produtos em 
+                        <b><a class="link-rodape" href="http://www.netoenitally.com.br" target="_new" title="Clique aqui para conhecer o nosso site e nossos produtos">Manoel Carvalho Neto</a></b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+
